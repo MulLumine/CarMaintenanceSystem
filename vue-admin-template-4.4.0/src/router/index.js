@@ -165,7 +165,7 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+        path: 'https://github.com/MulLumine/CarMaintenanceSystem',
         meta: { title: '项目地址', icon: 'link' }
       }
     ]
