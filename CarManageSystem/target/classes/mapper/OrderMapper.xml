@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sym.mapper.OrderMapper">
+
+    <select id="searchAllVoByPage" resultType="com.sym.vo.UserCarOderComVo">
+        select distinct user.name,user.phone,user.grade,
+        car.type,theorder.situation,
+        theorder.id,theorder.status,theorder.price,theorder.time
+        from user,car,theorder
+        <where>
+            <if test="vo.name!=null and vo.name!=''">user.name like concat('%',#{vo.name},'%') </if>
+            <if test="vo.phone!=null and vo.phone!=''">user.phone like concat('%',#{vo.phone},'%')</if>
+            <if test="vo.grade!=null and vo.grade!=''">user.grade = #{vo.grade}</if>
+            <if test="vo.type!=null and vo.type!=''">car.type like concat('%',#{vo.type},'%')</if>
+            <if test="vo.situation!=null and vo.situation!=''">theorder.situation like concat('%',#{vo.situation},'%')</if>
+            <if test="vo.status!=null and vo.status!=''">theorder.status = #{vo.status}</if>
+            and user.id = car.userId and car.id = theorder.carId and  car.deleted = 0 and user.deleted = 0 and theorder.deleted = 0
+        </where>
+    </select>
+    <select id="searchComListByOrderId" resultType="com.sym.entity.Component">
+        select distinct component.id,component.number,component.inprice,component.outprice,component.description
+        from component,order_component
+        where component.id = order_component.comId and component.deleted = 0 and order_component.deleted = 0 and
+              order_component.orderId = #{id}
+    </select>
+    <select id="searchUserOrderByPage" resultType="com.sym.vo.UserCarOderComVo">
+        select distinct user.name,user.phone,user.grade,
+                        car.type,theorder.situation,
+                        theorder.id,theorder.status,theorder.price,theorder.time
+        from user,car,theorder
+        where user.id = #{id} and user.id = car.userId and car.id = theorder.carId and  car.deleted = 0 and user.deleted = 0 and theorder.deleted = 0
+    </select>
+</mapper>

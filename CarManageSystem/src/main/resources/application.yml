@@ -1,0 +1,40 @@
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  redis:
+    port: 6379
+    host: 192.168.88.128 #换成自己的服务器地址
+    password: 123456  #redis的密码
+    database: 0       # 0号数据库
+    jedis: #redis连接池配置
+      pool:
+        max-active: 8  #最大连接数
+        max-wait: 1ms  #连接池最大阻塞等待时间
+        max-idle: 4    #连接池最大空闲连接
+        min-idle: 0    #连接池最小空闲连接
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/vehiclesystem?useSSL=false  #此处也记得换成自己的数据库
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  cache:
+    type: redis
+    redis:
+      time-to-live: 2D
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 8800
+

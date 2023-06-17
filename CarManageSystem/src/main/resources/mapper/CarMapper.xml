@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sym.mapper.CarMapper">
+
+    <select id="selectPageVo" resultType="com.sym.vo.CarAndUserVo">
+        select distinct car.id,userId,type,description,code,color,name,phone,grade,marker from car,user
+        <where>
+            <if test="vo.type!=null and vo.type!=''">car.type like concat('%',#{vo.type},'%')</if>
+            <if test="vo.description!=null and vo.description!=''">car.description like concat('%',#{vo.description},'%')</if>
+            <if test="vo.code!=null and vo.code!=''">car.code like concat('%',#{vo.code},'%')</if>
+            <if test="vo.color!=null and vo.color!=''">car.color like concat('%',#{vo.color},'%')</if>
+            <if test="vo.phone!=null and vo.phone!=''">user.phone like concat('%',#{vo.phone},'%')</if>
+            <if test="vo.name!=null and vo.name!=''">user.name like concat('%',#{vo.name},'%')</if>
+            and car.userId = user.id and car.deleted = 0 and user.deleted = 0
+        </where>
+    </select>
+    <select id="selectUserPageVo" resultType="com.sym.vo.CarAndUserVo">
+        select  car.id,userId,type,description,code,color,name,phone,grade from car,user
+        where userId = #{id} and car.userId = user.id and car.deleted = 0 and user.deleted = 0
+    </select>
+</mapper>
