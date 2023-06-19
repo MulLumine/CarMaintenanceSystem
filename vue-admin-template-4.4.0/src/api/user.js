@@ -8,6 +8,14 @@ export function login(data) {
   })
 }
 
+export function reg(user) {
+  return request({
+    url: '/users/register',
+    method: 'post',
+    data: user
+  })
+}
+
 export function getInfo() {
   return request({
     url: '/users/decodeToken',

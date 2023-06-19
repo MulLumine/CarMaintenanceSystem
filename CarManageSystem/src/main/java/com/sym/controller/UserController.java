@@ -137,4 +137,6 @@ public class UserController {
        UserPageVo userPageVo = userService.getMoreInfo(request);
        return Result.success(userPageVo,ResultCodeEnum.SELECT_SUCCESS);
     }
+
+
 }

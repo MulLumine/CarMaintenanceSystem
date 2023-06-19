@@ -1,9 +1,9 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <el-form ref="form" :model="form" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">登  录</h3>
+        <h3 class="title">注  册</h3>
       </div>
 
       <el-form-item prop="username">
@@ -12,7 +12,7 @@
         </span>
         <el-input
           ref="username"
-          v-model="loginForm.username"
+          v-model="form.username"
           placeholder="用户名"
           name="username"
           type="text"
@@ -28,27 +28,68 @@
         <el-input
           :key="passwordType"
           ref="password"
-          v-model="loginForm.password"
+          v-model="form.password"
           :type="passwordType"
           placeholder="密码"
           name="password"
           tabindex="2"
           auto-complete="on"
-          @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" size="medium" @click.native.prevent="handleLogin">登录</el-button>
-      <el-link type="primary" style="margin-bottom: 30px" @click="pushReg">没有账号？点此注册</el-link>
+      <el-form-item prop="name">
+        <span class="svg-container">
+          <svg-icon icon-class="user" />
+        </span>
+        <el-input
+          ref="name"
+          v-model="form.name"
+          placeholder="真实姓名"
+          name="name"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
+      </el-form-item>
+      <el-form-item prop="phone">
+        <span class="svg-container">
+          <i class="el-icon-phone-outline" />
+        </span>
+        <el-input
+          ref="phone"
+          v-model="form.phone"
+          placeholder="电话"
+          name="phone"
+          type="text"
+          tabindex="1"
+          auto-complete="off"
+        />
+      </el-form-item>
+      <el-form-item prop="phone">
+        <span class="svg-container">
+          <i class="el-icon-question" />
+        </span>
+        <el-select v-model="form.gender" placeholder="请选择性别" style="width: 92%">
+          <el-option
+            v-for="item in options"
+            :key="item"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
+      </el-form-item>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" size="medium" @click.native.prevent="registUser">注册</el-button>
+      <el-link type="primary" style="margin-bottom: 30px" @click="pushLog">返回登陆</el-link>
     </el-form>
   </div>
 </template>
 
 <script>
-import { getInfo, login } from '@/api/user'
+// eslint-disable-next-line no-unused-vars
+import { getInfo, login, reg } from '@/api/user'
 // eslint-disable-next-line no-unused-vars
 import { Message } from 'element-ui'
 
@@ -71,9 +112,10 @@ export default {
       }
     }
     return {
-      loginForm: {
-        username: 'miumiu',
-        password: '123456'
+      options: ['男', '女'],
+      form: {
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -106,38 +148,25 @@ export default {
         this.$refs.password.focus()
       })
     },
-    handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          login(this.loginForm).then(res => {
-            // eslint-disable-next-line eqeqeq
-            window.localStorage.setItem('token', res.data.Authorization)
-            this.$router.push('/')
-            this.loading = false
-            getInfo().then(resa => {
-              window.localStorage.removeItem('isShow')
-              if (resa.data.marker === 0) { window.localStorage.setItem('isShow', false) } else window.localStorage.setItem('isShow', true)
-            })
-          }).catch(error => {
-            // eslint-disable-next-line eqeqeq
-            if (error.message == 'Request failed with status code 404') {
-              Message({
-                type: 'error',
-                message: '用户名或密码错误！'
-              })
-            }
-            this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          this.loading = false
-          return false
-        }
+    registUser() {
+      reg(this.form).then(() => {
+        Message({
+          message: '注册成功！',
+          type: 'success',
+          showClose: true
+        })
+        this.$router.push('/login')
+      }).catch(err => {
+        Message({
+          message: '注册失败！',
+          type: 'error',
+          showClose: true
+        })
+        console.log(err)
       })
     },
-    pushReg() {
-      this.$router.push('/register')
+    pushLog() {
+      this.$router.push('/login')
     }
   }
 }

@@ -39,3 +39,11 @@ export function getOwnCar() {
     url: '/cars'
   })
 }
+
+export function getPageOwnCar(pageNum, pageSize) {
+  return request({
+    method: 'get',
+    url: '/cars/ownpage',
+    params: { pageNum, pageSize }
+  })
+}

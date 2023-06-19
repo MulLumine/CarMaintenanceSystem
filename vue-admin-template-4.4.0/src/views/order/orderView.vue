@@ -35,11 +35,12 @@
       </el-row>
 
       <el-table v-loading="loading" :data="tableData" border stripe style="margin: 0 auto;width: 95%" size="medium">
-        <el-table-column prop="id" label="订单ID" width="80" />
+        <el-table-column prop="id" label="订单ID" width="70" />
         <el-table-column prop="name" label="车主" width="80" />
         <el-table-column prop="stringGrade" label="会员等级" width="80" />
-        <el-table-column prop="type" label="车辆型号" width="100" />
-        <el-table-column prop="situation" label="订单情况" width="350" />
+        <el-table-column prop="type" label="车辆型号" width="80" />
+        <el-table-column prop="price" label="订单价格"/>
+        <el-table-column prop="situation" label="订单情况" width="300" />
         <el-table-column prop="stringstatus" label="订单状态" />
         <el-table-column prop="phone" label="车主电话" width="120" />
         <el-table-column label="操作" width="300" align="center" fixed="right">

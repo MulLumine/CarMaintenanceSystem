@@ -36,6 +36,11 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
+  {
+    path: '/register',
+    component: () => import('@/views/register/index.vue'),
+    hidden: true
+  },
 
   {
     path: '/404',
@@ -88,7 +93,18 @@ export const constantRoutes = [
       }
     ]
   },
-
+  {
+    path: '/owncar',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Form',
+        component: () => import('@/views/ownCar/OwnCarView.vue'),
+        meta: { title: '我的车辆', icon: 'el-icon-truck' }
+      }
+    ]
+  },
   {
     path: '/form',
     component: Layout,

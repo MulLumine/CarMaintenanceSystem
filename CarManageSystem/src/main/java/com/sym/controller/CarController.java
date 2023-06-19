@@ -114,4 +114,21 @@ public class CarController {
         return Result.success(carList,ResultCodeEnum.SELECT_SUCCESS);
     }
 
+    @GetMapping("/ownpage")
+    @PreAuthorize("hasAnyAuthority('admin','common','superAdmin')")
+    public Result getOwnPageCar(HttpServletRequest request,@RequestParam Integer pageNum,@RequestParam Integer pageSize) {
+        //取key
+        Object secretKey = redisTemplate.opsForValue().get("secretKey");
+        SecretKey realsecretKey = decodeKey((String) secretKey);
+        //取token
+        String token = request.getHeader("Authorization");
+        Claims claims = JwtUtil.parseJWT(token,realsecretKey);
+        //用户token中的id
+        Integer tokenId = (Integer) claims.get("id");
+        LambdaQueryWrapper<Car> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Car::getUserId,tokenId);
+        IPage<Car> page = new Page<>(pageNum,pageSize);
+        IPage<Car> finalPage = carService.page(page, queryWrapper);
+        return Result.success(finalPage,ResultCodeEnum.SELECT_SUCCESS);
+    }
 }
