@@ -3,13 +3,16 @@ package com.sym.handler;
 import com.sym.common.Result;
 import com.sym.common.ResultCodeEnum;
 import com.sym.exception.ServiceException;
+import io.jsonwebtoken.security.SignatureException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.security.SignatureException;
 
-@ControllerAdvice
+
+@RestControllerAdvice
 public class ExceptionHandlerUtils {
     @ExceptionHandler(SignatureException.class)
     public Result tokenEX(SignatureException signatureException){
@@ -27,8 +30,24 @@ public class ExceptionHandlerUtils {
         return  Result.fail(ResultCodeEnum.SYSTEM_ERROR);
     }
 
-    @ExceptionHandler(InternalAuthenticationServiceException.class)
-    public Result UserOrNameERROR(InternalAuthenticationServiceException e){
+
+
+    //登录异常
+    @ExceptionHandler(BadCredentialsException.class)
+    public Result UserOrNameERROR(BadCredentialsException e){
+        e.printStackTrace();
         return Result.fail(ResultCodeEnum.LOGIN_ERROR);
+    }
+    @ExceptionHandler(InternalAuthenticationServiceException.class)
+    public Result NoUserError(InternalAuthenticationServiceException e){
+        e.printStackTrace();
+        return Result.fail(ResultCodeEnum.LOGIN_ERROR);
+    }
+
+    //权限异常
+    @ExceptionHandler(AccessDeniedException.class)
+    public Result AccessERROR(AccessDeniedException e){
+        e.printStackTrace();
+        return Result.fail(ResultCodeEnum.ROLE_ERROR);
     }
 }

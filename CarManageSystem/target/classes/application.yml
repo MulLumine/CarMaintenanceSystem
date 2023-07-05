@@ -17,7 +17,7 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://10.32.200.100:3306/vehiclesystem?useSSL=false  #此处也记得换成自己的数据库
+    url: jdbc:mysql://localhost:3306/vehiclesystem?useSSL=false  #此处也记得换成自己的数据库
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
   mvc:

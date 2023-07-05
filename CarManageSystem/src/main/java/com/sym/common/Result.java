@@ -54,6 +54,7 @@ public  class Result<T> implements Serializable {
     public static<T> Result<T> fail(){
         return build(null, ResultCodeEnum.ERROR);
     }
+    public static<T> Result<T> fail(ResultCodeEnum dataError) { return build(null,dataError);}
     //失败里面有数据
     public static<T> Result<T> fail(T data){
         return build(data, ResultCodeEnum.ERROR);
