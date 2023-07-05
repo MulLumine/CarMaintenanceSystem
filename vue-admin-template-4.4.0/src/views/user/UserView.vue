@@ -34,22 +34,6 @@
         <el-button class="ml-5" type="warning" round size="medium" @click="resetObj">重置 <i class="el-icon-refresh" /></el-button>
       </div>
 
-      <!--        <div style="margin: 10px 0">
-      <el-popconfirm
-        class="mr-5"
-        confirm-button-text="确认删除"
-        cancel-button-text="我再想想"
-        icon="el-icon-info"
-        icon-color="red"
-        title="您确定删除吗？"
-        @confirm="delByIds"
-      >
-        <el-button slot="reference" type="danger" class="mr-5">批量删除 <el-icon><Close /></el-icon></el-button>
-      </el-popconfirm>
-
-      <el-button type="primary" style="margin-left: 10px" @click="Bailan">导入 <i class="el-icon-bottom" /></el-button>
-      <el-button type="primary" @click="Bailan">导出 <i class="el-icon-top" /></el-button>
-    </div>-->
 
       <el-table :data="tableData" border stripe style="margin: 0 auto;width: 95%">
         <el-table-column prop="id" label="ID" width="80" />

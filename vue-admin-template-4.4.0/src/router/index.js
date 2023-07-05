@@ -63,7 +63,7 @@ export const constantRoutes = [
   {
     path: '/example',
     component: Layout,
-    redirect: '/example/table',
+    redirect: '/example/car',
     name: 'Example',
     meta: { title: '信息管理', icon: 'el-icon-s-help' },
     children: [

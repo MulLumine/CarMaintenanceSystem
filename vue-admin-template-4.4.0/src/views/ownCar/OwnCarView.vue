@@ -10,9 +10,7 @@
         <el-table-column prop="type" label="车辆型号" width="140" />
         <el-table-column prop="code" label="车牌号" width="120" />
         <el-table-column prop="color" label="颜色" width="80" />
-        <el-table-column prop="name" label="车主" />
-        <el-table-column prop="phone" label="车主电话" />
-        <el-table-column prop="description" label="车辆描述" width="350" />
+        <el-table-column prop="description" label="车辆描述" />
         <el-table-column label="操作" width="200" align="center" fixed="right">
           <!-- eslint-disable-next-line -->
           <template slot-scope="scope" >
